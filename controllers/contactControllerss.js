@@ -7,6 +7,14 @@ exports.postContact = async (req, res) => {
           message: "you left a required field empty , please check again !",
         })
       : "";
+    const userEmail = await contact.findOne({ email: req.body.email });
+    if (userEmail) {
+      res.status(400).send({
+        message: "email alredy exists !",
+      });
+      return;
+    }
+
     const response = await newContact.save();
     res.send({ response: response, message: "user created !" });
   } catch (error) {
