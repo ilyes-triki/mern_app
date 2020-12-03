@@ -8,9 +8,10 @@ exports.postContact = async (req, res) => {
         })
       : "";
     const userEmail = await contact.findOne({ email: req.body.email });
-    if (userEmail) {
+    const userName = await contact.findOne({ name: req.body.name });
+    if (userEmail || userName) {
       res.status(400).send({
-        message: "email alredy exists !",
+        message: "user alredy exists !",
       });
       return;
     }
